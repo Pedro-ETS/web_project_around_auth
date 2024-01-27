@@ -1,33 +1,84 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React,{useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import HeaderLogin from "./HeaderLogin";
+import * as auth from "../utils/auth";
+import InfoTooltip from "./InfoTooltip";
+import image from "../images/error.svg";
+
 function Login(props) {
-    return (
-        <div className="sign-in">
-          <HeaderLogin/>
-        <h1 className='sign-in__titulo'>iniciar sesion</h1>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
+  const navigate = useNavigate();
+  const mensaje = "Uy, algo salio mal. Por favor, intentalo de nuevo";
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      return;
+    }
+    try {
+      const data = await auth.authorize(password, email);
+   
+      if (data.token) {
+        props.handleEmail(email);
+        setEmail("");
+        setPassword("");
+        props.handleLogin();
+        navigate("/");
+      }
+    } catch (error) { 
+      setShowTooltip(true);
+    }
+  };
+
+  const handleCloseTooltip = () => {
+    setShowTooltip(false);
+  };
+
+  return (
+    <div className="login">
+      <HeaderLogin />
+      <form className="login__form" onSubmit={handleSubmit}>
+        <h1 className="login__titulo">iniciar sesion</h1>
         <input
-          id="login-correo"
-          className="sign-in__input"
+          className="login__input"
           placeholder="Correo electronico"
-          minlength={2}
-          maxlength={40}
           required
+          name="email"
+          type="email"
+          value={email}
+          onChange={handleChange}
         />
         <input
-          id="login-contraseña"
-          className="sign-in__input"
+          className="login__input"
           placeholder="Contraseña"
-          type='password'
-          minlength={2}
-          maxlength={40}
-          required
+          name="password"
+          type="password"
+          value={password}
+          onChange={handleChange}
+         
         />
-        <button className='sign-in__btn-start'>Iniciar sesion</button>
-        <Link className='sign-in__link' to="/">¿Aún no eres miembro?  Regístrate aquí</Link>
-          
-        </div>
-    );
+        <button className="login__btn-start">Iniciar sesion</button>
+        <Link className="login__link" to="/">
+          ¿Aún no eres miembro? Regístrate aquí
+        </Link>
+      </form>
+      {showTooltip && (
+        <InfoTooltip
+          mensaje={mensaje}
+          image={image}
+          handleCloseTooltip={handleCloseTooltip}
+        />
+      )}
+    </div>
+  );
 }
 
 export default Login;

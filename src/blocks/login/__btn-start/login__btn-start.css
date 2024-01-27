@@ -1,4 +1,4 @@
-.sign-in__btn-start {
+.login__btn-start {
   display: block;
   max-width: 358px;
   width: 100%;
@@ -12,7 +12,7 @@
   cursor: pointer;
   color: black;
 }
-.sign-in__btn-start:hover{
+.login__btn-start:hover{
 opacity: 0.85;
 background: #FFF;
 }

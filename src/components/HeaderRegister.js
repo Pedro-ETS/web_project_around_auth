@@ -1,10 +1,11 @@
 import React from "react";
 import GenericHeader from "./GenericHeader";
+import { NavLink } from 'react-router-dom';
 
 function HeaderRegister() {
   return (
       <GenericHeader>
-        <h1 className="header__titulo">Iniciar sesión</h1>
+        <NavLink exact className="header__titulo"  to="/singnin">Iniciar sesión</NavLink>
       </GenericHeader>
   );
 }

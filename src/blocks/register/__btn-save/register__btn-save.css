@@ -1,4 +1,4 @@
-.sign-in__btn-save {
+.register__btn-save {
     display: block;
     max-width: 358px;
     width: 100%;
@@ -12,7 +12,7 @@
     cursor: pointer;
     color: black;
   }
-  .sign-in__btn-save:hover{
+  .register__btn-save:hover{
   opacity: 0.85;
   background: #FFF;
   }

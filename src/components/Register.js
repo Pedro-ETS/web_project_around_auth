@@ -1,36 +1,79 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import HeaderRegister from './HeaderRegister';
-import HeaderLogin from './HeaderLogin';
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import HeaderRegister from "./HeaderRegister";
+import InfoTooltip from "./InfoTooltip";
+import * as auth from "../utils/auth";
+import image from "../images/sucesfull.svg";
 
 function Register(props) {
-    return (
-        <div className="sign-up">
-          <HeaderRegister/>
-          <h1 className='sign-up__titulo'>Registrate</h1>
-          <input
-          id="login-correo"
-          className="sign-up__input"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
+  const navigate = useNavigate();
+  const mensaje = "¡Correcto!. Ya estas registrado";
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await auth.register(password, email);
+      console.log(data);
+      if (data) {
+        setEmail("");
+        setPassword("");
+        setShowTooltip(true);
+        navigate("/singnin");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCloseTooltip = () => {
+    setShowTooltip(false);
+  };
+
+  return (
+    <div className="register">
+      <HeaderRegister />
+      <form className="register__form" onSubmit={handleSubmit}>
+        <h1 className="register__titulo">Registrate</h1>
+        <input
+          className="register__input"
           placeholder="Correo electronico"
-          minlength={2}
-          maxlength={40}
           required
+          name="email"
+          type="email"
+          value={email}
+          onChange={handleChange}
         />
         <input
-          id="login-contraseña"
-          className="sign-up__input"
+          className="register__input"
           placeholder="Contraseña"
-          type='password'
-          minlength={2}
-          maxlength={40}
-          required
+          name="password"
+          type="password"
+          value={password}
+          onChange={handleChange}
         />
-        <button className='sign-in__btn-save'>Registrate</button>
-        <Link className='sign-in__link' to="/">¿Ya eres miembro? Inicia sesion aqui </Link>
-        
-        </div>
-    );
+        <button className="register__btn-save">Registrate</button>
+        <Link className="register__link" to="/singnin">
+          ¿Ya eres miembro? Inicia sesion aqui
+        </Link>
+      </form>
+      {showTooltip && (
+        <InfoTooltip
+          mensaje={mensaje}
+          image={image}
+          handleCloseTooltip={handleCloseTooltip}
+        />
+      )}
+    </div>
+  );
 }
 
 export default Register;
