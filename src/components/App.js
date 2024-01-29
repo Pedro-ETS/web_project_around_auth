@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Main from "./Main";
 import Footer from "./Footer";
 import api from "../utils/api.js";
@@ -26,6 +27,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState(null);
+  const navigate = useNavigate();
 
   const handleEditProfileClick = () => setEditProfilePopupOpen(true);
   const handleAddPlaceClick = () => setAddPlacePopupOpen(true);
@@ -128,7 +130,23 @@ function App() {
   function handleEmail(data){
    setEmail(data);
   }
+  useEffect(() => {
+    tokenCheck();
+  },[]);
 
+  function tokenCheck() {
+    const jwt = localStorage.getItem('token');
+    console.log(jwt);
+    if (jwt) {
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          setEmail(res.data.email);
+          setLoggedIn(true);
+          navigate("/");
+        }
+      });
+    }
+  }
   return (
     <>
       <div className="page">

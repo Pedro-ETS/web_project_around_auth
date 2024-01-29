@@ -1,6 +1,6 @@
 export const BASE_URL = "https://register.nomoreparties.co";
 
-export const register = (password, email) => {// registro
+export const register = (password, email) => { //registro
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
