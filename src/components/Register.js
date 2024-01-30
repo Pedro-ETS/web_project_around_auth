@@ -29,7 +29,7 @@ function Register(props) {
         setShowTooltip(true);
         setTimeout(() => {
           setShowTooltip(false);
-          navigate("/signin");
+          navigate("/web_project_around_auth/signin");
         }, 7000);
       }
     } catch (error) {
@@ -39,7 +39,7 @@ function Register(props) {
 
   const handleCloseTooltip = () => {
     setShowTooltip(false);
-    navigate("/signin");
+    navigate("/web_project_around_auth/signin");
   };
 
   return (
@@ -65,7 +65,7 @@ function Register(props) {
           onChange={handleChange}
         />
         <button className="register__btn-save">Registrate</button>
-        <Link className="register__link" to="/singnin">
+        <Link className="register__link" to="/web_project_around_auth/signin">
           ¿Ya eres miembro? Inicia sesion aqui
         </Link>
       </form>

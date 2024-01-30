@@ -3,7 +3,7 @@ export const BASE_URL = "https://register.nomoreparties.co";
 export const register = (password, email) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
-    headers: {
+    headers: {   
       "Content-Type": "application/json",
     },
     body: JSON.stringify({

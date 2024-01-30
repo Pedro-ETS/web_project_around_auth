@@ -9,7 +9,7 @@ function HeaderMain(props) {
   return (
     <GenericHeader>
       <h1 className="header__email">{props.email}</h1>
-      <NavLink exact className="header__titulo" to="/signin" onClick={signOut}>
+      <NavLink exact className="header__titulo" to="/web_project_around_auth/signin" onClick={signOut}>
         Cerrar sesión
       </NavLink>
     </GenericHeader>

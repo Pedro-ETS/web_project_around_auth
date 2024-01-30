@@ -10,7 +10,6 @@ import CurrentUserContext from "../contexts/CurrentUserContext.js";
 import HeaderMain from "./HeaderMain.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
-import InfoTooltip from "./InfoTooltip.js";
 import * as auth from "../utils/auth.js";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.js";
@@ -150,9 +149,9 @@ function App() {
       <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
           <Routes> 
-          <Route  path="/signin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
-          <Route  path="/signup" element={<Register/>}/>
-            <Route exact path="/" 
+          <Route  path="/web_project_around_auth/signin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
+          <Route  path="/web_project_around_auth/signup" element={<Register/>}/>
+            <Route exact path="/web_project_around_auth/" 
               element={
                 <ProtectedRoute loggedIn={loggedIn} main={
                     <>
