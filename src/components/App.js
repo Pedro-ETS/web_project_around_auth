@@ -67,7 +67,6 @@ function App() {
       .getInitialCards("cards")
       .then((data) => {
         setCards(data);
-        console.log(data);
       })
       .catch((error) => {
         alert("Error al obtener las tarjetas:", error);
@@ -136,7 +135,6 @@ function App() {
 
   function tokenCheck() {
     const jwt = localStorage.getItem('token');
-    console.log(jwt);
     if (jwt) {
       auth.checkToken(jwt).then((res) => {
         if (res) {
@@ -148,11 +146,11 @@ function App() {
     }
   }
   return (
-    <>
+    <>   
       <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
           <Routes> 
-          <Route  path="/singnin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
+          <Route  path="/signin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
           <Route  path="/signup" element={<Register/>}/>
             <Route exact path="/" 
               element={

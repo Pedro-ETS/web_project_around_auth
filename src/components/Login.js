@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderLogin from "./HeaderLogin";
 import * as auth from "../utils/auth";
@@ -25,7 +25,7 @@ function Login(props) {
     }
     try {
       const data = await auth.authorize(password, email);
-   
+
       if (data.token) {
         props.handleEmail(email);
         setEmail("");
@@ -33,7 +33,7 @@ function Login(props) {
         props.handleLogin();
         navigate("/");
       }
-    } catch (error) { 
+    } catch (error) {
       setShowTooltip(true);
     }
   };
@@ -63,7 +63,6 @@ function Login(props) {
           type="password"
           value={password}
           onChange={handleChange}
-         
         />
         <button className="login__btn-start">Iniciar sesion</button>
         <Link className="login__link" to="/">

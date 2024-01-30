@@ -27,7 +27,10 @@ function Register(props) {
         setEmail("");
         setPassword("");
         setShowTooltip(true);
-        navigate("/singnin");
+        setTimeout(() => {
+          setShowTooltip(false);
+          navigate("/signin");
+        }, 7000);
       }
     } catch (error) {
       console.log(error);
@@ -36,6 +39,7 @@ function Register(props) {
 
   const handleCloseTooltip = () => {
     setShowTooltip(false);
+    navigate("/signin");
   };
 
   return (
