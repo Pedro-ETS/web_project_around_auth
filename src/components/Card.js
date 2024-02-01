@@ -32,7 +32,7 @@ function Card({
   return (
     <div id={id} className="card">
       <button className={cardDeleteButtonClassName} onClick={handleDeleteClick}></button>
-      <img src={link} className="card__image" alt="Imagen de un hermoso paisaje" onClick={handleImgCard}/>
+      <img src={link} className="card__image" alt="Imagen de un hermoso paisaje " onClick={handleImgCard}/>
       <h2 className="card__subtitle"> {name} </h2>
       <div className="card__contet">
         <button className={cardLikeButtonClassName} onClick={handleLikeClick}></button>

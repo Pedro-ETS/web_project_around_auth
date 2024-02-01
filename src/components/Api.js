@@ -17,6 +17,7 @@ export default class Api {
       return Promise.reject(`Error: ${res.status}`);
     });
   }
+  
   setCard(fullLink,formData) {
     return fetch(this._url+fullLink, {
       method: "POST",
@@ -91,12 +92,12 @@ export default class Api {
       return Promise.reject(`Error: ${res.status}`);
     });
   }
-  setUserInfo(fullLink,datos) {
+  setUserInfo(fullLink,dataUser) {
     return fetch(this._url+fullLink, {
       method: "PATCH",
       body: JSON.stringify({
-        about: datos.about,
-        name: datos.name,
+        about: dataUser.about,
+        name: dataUser.name,
       }),
       headers: {
         authorization: this._authorization,

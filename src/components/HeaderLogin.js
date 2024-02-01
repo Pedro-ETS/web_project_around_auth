@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 function HeaderLogin() {
   return (
     <GenericHeader>
-      <NavLink exact className="header__titulo" to="/web_project_around_auth/signup">
+      <NavLink exact className="header__titulo" to="/signup">
         Registrate
       </NavLink>
     </GenericHeader>

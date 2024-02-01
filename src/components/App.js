@@ -149,9 +149,9 @@ function App() {
       <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
           <Routes> 
-          <Route  path="/web_project_around_auth/signin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
-          <Route  path="/web_project_around_auth/signup" element={<Register/>}/>
-            <Route exact path="/web_project_around_auth/" 
+          <Route  path="/signin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
+          <Route  path="/signup" element={<Register/>}/>
+            <Route exact path="/" 
               element={
                 <ProtectedRoute loggedIn={loggedIn} main={
                     <>

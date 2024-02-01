@@ -31,7 +31,7 @@ function Login(props) {
         setEmail("");
         setPassword("");
         props.handleLogin();
-        navigate("/web_project_around_auth/");
+        navigate("/");
       }
     } catch (error) {
       setShowTooltip(true);
@@ -65,7 +65,7 @@ function Login(props) {
           onChange={handleChange}
         />
         <button className="login__btn-start">Iniciar sesion</button>
-        <Link className="login__link" to="/web_project_around_auth/signup">
+        <Link className="login__link" to="/signup">
           ¿Aún no eres miembro? Regístrate aquí
         </Link>
       </form>

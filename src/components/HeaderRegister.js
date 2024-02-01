@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 function HeaderRegister() {
   return (
     <GenericHeader>
-      <NavLink exact className="header__titulo" to="/web_project_around_auth/signin">
+      <NavLink exact className="header__titulo" to="/signin">
         Iniciar sesión
       </NavLink>
     </GenericHeader>
