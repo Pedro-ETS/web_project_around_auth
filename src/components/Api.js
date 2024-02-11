@@ -4,127 +4,89 @@ export default class Api {
     this._authorization = token;
     this._datos = datos;
   }
-  getInitialCards(fullLink) {
-    return fetch(this._url+fullLink, {
+  _fetchWithAuthorization(url, options) {
+    return fetch(url, {
+      ...options,
       headers: {
+        ...options.headers,
         authorization: this._authorization,
         "Content-Type": "application/json",
       },
     }).then((res) => {
       if (res.ok) {
         return res.json();
+      } else {
+        throw new Error(`Error: ${res.statusText} (${res.status})`);
       }
-      return Promise.reject(`Error: ${res.status}`);
     });
   }
-  
-  setCard(fullLink,formData) {
-    return fetch(this._url+fullLink, {
+  getInitialCards(fullLink) {
+    return this._fetchWithAuthorization(`${this._url}${fullLink}`, {}).catch(
+      (error) => {
+        console.error(`Error fetching initial cards: ${error.message}`);
+        throw error;
+      }
+    );
+  }
+  setCard(fullLink, formData) {
+    const url = `${this._url}${fullLink}`;
+    const options = {
       method: "POST",
       body: JSON.stringify({
         link: formData.link,
         name: formData.name,
       }),
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    };
+    return this._fetchWithAuthorization(url, options);
   }
   getUser(fullLink) {
-    return fetch(this._url+fullLink, {
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
+    return this._fetchWithAuthorization(`${this._url}${fullLink}`, {}).catch(
+      (error) => {
+        console.error(`Error fetching initial cards: ${error.message}`);
+        throw error;
       }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    );
   }
-  changeLikeCardStatus(isLiKed,fullLink,cardId) {
+  changeLikeCardStatus(isLiKed, fullLink, cardId) {
+    const url = `${this._url}${fullLink + cardId}`;
     if (isLiKed) {
-      return fetch(this._url+fullLink+cardId, {
+      const options = {
         method: "PUT",
-        headers: {
-          authorization: this._authorization,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      });
+      };
+      return this._fetchWithAuthorization(url, options);
     } else {
-      return fetch(this._url+fullLink+cardId, {
+      const options = {
         method: "DELETE",
-        headers: {
-          authorization: this._authorization,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      });
+      };
+      return this._fetchWithAuthorization(url, options);
     }
   }
-  deleteCard(fullLink,cardId) {
-    return fetch(this._url+fullLink+cardId, {
+  deleteCard(fullLink, cardId) {
+    const url = `${this._url}${fullLink + cardId}`;
+    const options = {
       method: "DELETE",
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    };
+    return this._fetchWithAuthorization(url, options);
   }
-  setUserInfo(fullLink,dataUser) {
-    return fetch(this._url+fullLink, {
+  setUserInfo(fullLink, dataUser) {
+    const url = `${this._url}${fullLink}`;
+    const options = {
       method: "PATCH",
       body: JSON.stringify({
         about: dataUser.about,
         name: dataUser.name,
       }),
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    };
+    return this._fetchWithAuthorization(url, options);
   }
-  modifyImgUser(fullLink,datos) {
-    return fetch(this._url+fullLink, {
+  modifyImgUser(fullLink, datos) {
+    const url = `${this._url}${fullLink}`;
+    const options = {
       method: "PATCH",
       body: JSON.stringify({
         avatar: datos.avatar,
       }),
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    };
+    return this._fetchWithAuthorization(url, options);
   }
 }

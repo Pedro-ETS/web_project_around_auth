@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Main from "./Main";
 import Footer from "./Footer";
 import api from "../utils/api.js";
@@ -11,7 +11,7 @@ import HeaderMain from "./HeaderMain.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
 import * as auth from "../utils/auth.js";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.js";
 
 function App() {
@@ -39,6 +39,7 @@ function App() {
     setConfirmationPopupOpen(false);
     setSelectedCard(null);
   };
+
   function handleUpdateUser(dataUser) {
     api
       .setUserInfo("users/me", dataUser)
@@ -50,28 +51,6 @@ function App() {
         alert("Error al modificar los  datos del usuario:", error);
       });
   }
-  useEffect(() => {
-    api
-      .getUser("users/me")
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((error) => {
-        alert.error("Error al obtener datos del usuario:", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    api
-      .getInitialCards("cards")
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((error) => {
-        alert("Error al obtener las tarjetas:", error);
-      });
-  }, []);
-
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api
@@ -87,7 +66,6 @@ function App() {
         alert("Error no se pudo agregar el like o deslike", error);
       });
   }
-
   function handleUpdateAvatar(data) {
     api
       .modifyImgUser("users/me/avatar", data)
@@ -125,15 +103,14 @@ function App() {
   function handleLogin() {
     setLoggedIn(true);
   }
-  function handleEmail(data){
-   setEmail(data);
+  function handleEmail(data) {
+    setEmail(data);
   }
   useEffect(() => {
     tokenCheck();
-  },[]);
-
+  }, []);
   function tokenCheck() {
-    const jwt = localStorage.getItem('token');
+    const jwt = localStorage.getItem("token");
     if (jwt) {
       auth.checkToken(jwt).then((res) => {
         if (res) {
@@ -144,18 +121,43 @@ function App() {
       });
     }
   }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await api.getUser("users/me");
+        setCurrentUser(userData);
+      } catch (userError) {
+        alert.error("Error al obtener datos del usuario:", userError);
+      }
+      try {
+        const initialCardsData = await api.getInitialCards("cards");
+        setCards(initialCardsData);
+      } catch (cardsError) {
+        alert.error("Error al obtener las tarjetas:", cardsError);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <>   
+    <>
       <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
-          <Routes> 
-          <Route  path="/signin" element={<Login handleLogin={handleLogin} handleEmail={handleEmail}/>}/>
-          <Route  path="/signup" element={<Register/>}/>
-            <Route exact path="/" 
+          <Routes>
+            <Route
+              path="/signin"
               element={
-                <ProtectedRoute loggedIn={loggedIn} main={
+                <Login handleLogin={handleLogin} handleEmail={handleEmail} />
+              }
+            />
+            <Route path="/signup" element={<Register />} />
+            <Route exact path="/"
+              element={
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  main={
                     <>
-                    <HeaderMain email={email}/>
+                      <HeaderMain email={email} />
                       <Main
                         onEditProfileClick={handleEditProfileClick}
                         onAddPlaceClick={handleAddPlaceClick}
@@ -190,9 +192,8 @@ function App() {
                       />
                       <Footer />
                     </>
-
-                  }>
-                </ProtectedRoute>
+                  }
+                ></ProtectedRoute>
               }
             />
           </Routes>

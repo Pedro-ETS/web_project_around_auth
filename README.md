@@ -103,4 +103,4 @@ Con esta colección de componentes puedes modificar la URL de tu página web, re
 * [Enlace al proyecto en Figma (2 parte)](https://www.figma.com/file/RhUL5VAaXsgepRRcgmn8mf/Web_Brief_Sprint_15_ES-%7C-Registro-e-autoriza%C3%A7%C3%A3o?type=design&node-id=0-1&mode=design)
 
 **Página Web**
-* [Enlace de proyecto](https://pedro-ets.github.io/web_project_around_auth/?)
+* [Enlace de proyecto](https://web-project-around-auth-hazel.vercel.app/)
